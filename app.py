@@ -1,4 +1,5 @@
 import sys
+import imp
 from io import BytesIO
 
 import telegram
@@ -7,35 +8,147 @@ from flask import Flask, request, send_file
 from fsm import TocMachine
 
 
-API_TOKEN = 'Your Telegram API Token'
-WEBHOOK_URL = 'Your Webhook URL'
+API_TOKEN = '505050164:AAGxd3RICtZh9A36aTgnygxheiabZIQJRs0'
+WEBHOOK_URL = 'https://df48770a.ngrok.io/hook'
 
 app = Flask(__name__)
 bot = telegram.Bot(token=API_TOKEN)
 machine = TocMachine(
     states=[
         'user',
-        'state1',
-        'state2'
+        'drink',
+        'food',
+	'play',
+	'drinkname1',
+        'drinkname2',
+	'drinkname3',
+	'drinkname4',
+	'drinkname5',
+	'foodname1',
+	'foodname2',
+        'foodname3',
+	'foodname4',
+	'foodname5',
+	'zero',
+	'mid',
+	'high'
     ],
     transitions=[
         {
             'trigger': 'advance',
             'source': 'user',
-            'dest': 'state1',
-            'conditions': 'is_going_to_state1'
+            'dest': 'drink',
+            'conditions': 'is_going_to_drink'
         },
         {
             'trigger': 'advance',
             'source': 'user',
-            'dest': 'state2',
-            'conditions': 'is_going_to_state2'
+            'dest': 'food',
+            'conditions': 'is_going_to_food'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'user',
+            'dest': 'play',
+            'conditions': 'is_going_to_play'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'drink',
+            'dest': 'drinkname1',
+            'conditions': 'is_going_to_drinkname1'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'drink',
+            'dest': 'drinkname2',
+            'conditions': 'is_going_to_drinkname2'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'drink',
+            'dest': 'drinkname3',
+            'conditions': 'is_going_to_drinkname3'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'drink',
+            'dest': 'drinkname4',
+            'conditions': 'is_going_to_drinkname4'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'drink',
+            'dest': 'drinkname5',
+            'conditions': 'is_going_to_drinkname5'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'food',
+            'dest': 'foodname1',
+            'conditions': 'is_going_to_foodname1'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'food',
+            'dest': 'foodname2',
+            'conditions': 'is_going_to_foodname2'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'food',
+            'dest': 'foodname3',
+            'conditions': 'is_going_to_foodname3'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'food',
+            'dest': 'foodname4',
+            'conditions': 'is_going_to_foodname4'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'food',
+            'dest': 'foodname5',
+            'conditions': 'is_going_to_foodname5'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'play',
+            'dest': 'zero',
+            'conditions': 'is_going_to_zero'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'play',
+            'dest': 'mid',
+            'conditions': 'is_going_to_mid'
+        },
+	{
+            'trigger': 'advance',
+            'source': 'play',
+            'dest': 'high',
+            'conditions': 'is_going_to_high'
         },
         {
             'trigger': 'go_back',
             'source': [
-                'state1',
-                'state2'
+                'drink',
+                'food',
+		'play',
+		'drinkname1',
+		'drinkname2',
+                'drinkname3',
+		'drinkname4',
+		'drinkname5',
+		'foodname1',
+		'foodname2',
+                'foodname3',
+		'foodname4',
+		'foodname5',
+		'zero',
+		'mid',
+		'high'
             ],
             'dest': 'user'
         }
